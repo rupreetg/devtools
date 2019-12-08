@@ -18,16 +18,18 @@ RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \
     #
     # Verify git, process tools, lsb-release (common in install instructions for CLIs) installed
-    && apt-get -y install git procps lsb-release \
-    #
+    && apt-get -y install git \
+    && apt-get update \
+    && apt-get -y install python3-pip \
     # Install pylint
-    && pip --disable-pip-version-check --no-cache-dir install pylint \
-
+    && pip3 --disable-pip-version-check --no-cache-dir install pylint \
     #Install gcc [RG]	    
-    && apt-get -y install gcc libc-dev \
+    # apt-get -y install gcc libc-dev \
+    && pip3 --disable-pip-version-check --no-cache-dir install qsharp \
+    # && dotnet tool install -g Microsoft.Quantum.IQSharp \
+    # && dotnet iqsharp install \
     
-
-    # Create a non-root user to use if preferred - see https://aka.ms/vscode-remote/containers/non-root-user.
+# Create a non-root user to use if preferred - see https://aka.ms/vscode-remote/containers/non-root-user.
     && groupadd --gid $USER_GID $USERNAME \
     && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
     # [Optional] Add sudo support for non-root user
